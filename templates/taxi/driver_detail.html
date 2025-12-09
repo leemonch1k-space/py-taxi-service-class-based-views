@@ -2,10 +2,21 @@
 
 {% block content %}
   <h1>Driver: {{ driver.first_name }} {{ driver.last_name }}</h1>
-  <h2>Cars information:</h2>
-  {% for car in driver.cars.all %}
-    <li>model: {{ car.model }}, manufacturer: {{ car.manufacturer.name }}</li>
-  {% empty %}
-    <strong>Driver don't have any car. How it's even possible, driver without car?...</strong>
-  {% endfor %}
+
+  {% with cars=driver.cars.all %}
+    {% if cars %}
+
+      <h2>Cars information:</h2>
+      <ul>
+        {% for car in cars %}
+          <li>model: {{ car.model }}, manufacturer: {{ car.manufacturer.name }}</li>
+        {% endfor %}
+      </ul>
+
+    {% else %}
+      <h2>Cars information:</h2>
+      <strong>Driver don't have any car. How it's even possible, driver without car?...</strong>
+
+    {% endif %}
+  {% endwith %}
 {% endblock %}
